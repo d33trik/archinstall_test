@@ -24,11 +24,9 @@ main() {
 
 	echo "block_device: $block_device" >> arguments.txt
 	echo "boot_mode: $boot_mode" >> arguments.txt
-	echo "dotfiles: $dotfiles" >> arguments.txt
 	echo "hostname: $hostname" >> arguments.txt
 	echo "keymap: $keymap" >> arguments.txt
 	echo "locale: $locale" >> arguments.txt
-	echo "packages_to_install: $packages_to_install" >> arguments.txt
 	echo "root_password: $root_password" >> arguments.txt
 	echo "timezone: $timezone" >> arguments.txt
 	echo "user_full_name: $user_full_name" >> arguments.txt
