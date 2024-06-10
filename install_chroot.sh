@@ -13,16 +13,14 @@ export GUM_SPIN_TITLE_FOREGROUND=15
 main() {
 	local block_device=${1:?}
 	local boot_mode=${2:?}
-	local dotfiles=${3:?}
-	local hostname=${4:?}
-	local keymap=${5:?}
-	local locale=${6:?}
-	local packages_to_install=${7:?}
-	local root_password=${8:?}
-	local timezone=${9:?}
-	local user_full_name=${10:?}
-	local user_password=${11:?}
-	local user_username=${12:?}
+	local hostname=${3:?}
+	local keymap=${4:?}
+	local locale=${5:?}
+	local root_password=${6:?}
+	local timezone=${7:?}
+	local user_full_name=${8:?}
+	local user_password=${9:?}
+	local user_username=${10:?}
 
 	echo "block_device: $block_device" >> arguments.txt
 	echo "boot_mode: $boot_mode" >> arguments.txt

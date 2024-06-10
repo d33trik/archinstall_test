@@ -391,11 +391,9 @@ install_chroot() {
 	arch-chroot /mnt bash archinstall_test/install_chroot.sh \
 	"$block_device" \
 	"$boot_mode" \
-	"$dotfiles" \
 	"$hostname" \
 	"$keymap" \
 	"$locale" \
-	"$packages_to_install" \
 	"$root_password" \
 	"$timezone" \
 	"$user_full_name" \
