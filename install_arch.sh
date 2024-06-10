@@ -373,7 +373,7 @@ uptate_pacman_mirrorlist() {
 }
 
 install_essential_packages() {
-	bash install_essential_packages.sh
+	bash archinstall_test/arch/install_essential_packages.sh
 }
 
 generate_fstab() {
