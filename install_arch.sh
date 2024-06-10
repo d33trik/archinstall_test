@@ -25,6 +25,8 @@ main () {
 	local swap_size
 	local wipe_method
 	local mirrorlist_region
+	local boot_mode
+	local boot_partition_type
 
 	show_installation_warning
 	get_keyboard_layout
@@ -45,6 +47,15 @@ main () {
 	get_wipe_method
 	get_mirrorlist_region
 	show_isntallation_summary
+	verify_boot_mode
+	update_system_clock
+	wipe_block_device
+	partition_block_device
+	format_partitions
+	mount_filesystems
+	uptate_pacman_mirrorlist
+	install_essential_packages
+	generate_fstab
 }
 
 show_installation_warning() {
@@ -85,7 +96,6 @@ get_keyboard_layout() {
 	)
 }
 
-# TODO: Substituir nome do diretorio
 setup_keyboard_layout() {
 	gum spin \
 		--title="Setting up the keyboard layout..." \
@@ -234,7 +244,7 @@ get_wipe_method() {
 }
 
 get_mirrorlist_region() {
-	local regions=$(cat "archinstall_test/arch/mirrorlist_regions.txt")
+	local regions=$(cat "archinstall_test/resources/mirrorlist_regions.txt")
 
 	mirrorlist_region=$(
 		echo "$regions" |
@@ -280,5 +290,66 @@ show_isntallation_summary() {
 		--negative="No, Edit" \
 		"$prompt"
 }
+
+verify_boot_mode() {
+	gum spin \
+		--title="Verifying boot mode..." \
+		-- sleep 1
+
+	if cat /sys/firmware/efi/fw_platform_size &> /dev/null; then
+		boot_mode=1
+		boot_partition_type=1
+	else
+		boot_mode=0
+		boot_partition_type=4
+	fi
+}
+
+update_system_clock() {
+	gum spin \
+		--title="Updating system clock..." \
+		-- bash archinstall_test/arch/update_system_clock.sh
+}
+
+wipe_block_device() {
+	bash archinstall_test/arch/wipe_block_device.sh "$block_device" "$wipe_method"
+}
+
+partition_block_device() {
+	gum spin \
+		--title="Partitioning block device $block_device..." \
+		-- bash archinstall_test/arch/partition_block_device.sh "$block_device" "$boot_partition_type" "$swap_size"
+}
+
+format_partitions() {
+	echo "$block_device" | grep -E 'nvme' &>/dev/null && block_device="${block_device}p"
+
+	gum spin \
+		--title="Formatting partitions..." \
+		-- bash archinstall_test/arch/format_partitions.sh "$boot_mode" "$block_device"
+}
+
+mount_filesystems() {
+	gum spin \
+		--title="Mounting filesystems..." \
+		-- bash archinstall_test/arch/mount_filesystems.sh "$block_device"
+}
+
+uptate_pacman_mirrorlist() {
+	gum spin \
+		--title="Updating pacman mirrorlist..." \
+		-- bash archinstall_test/arch/uptate_pacman_mirrorlist.sh "$mirrorlist_region"
+}
+
+install_essential_packages() {
+	bash install_essential_packages.sh
+}
+
+generate_fstab() {
+	gum spin \
+		--title="Generating fstab..." \
+		-- bash archinstall_test/arch/generate_fstab.sh
+}
+
 
 main "$@"
