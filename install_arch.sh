@@ -58,10 +58,11 @@ get_keyboard_layout() {
 	)
 }
 
+# TODO: Substituir nome do diretorio
 setup_keyboard_layout() {
 	gum spin \
 		--title="Setting up the keyboard layout..." \
-		-- bash arch/setup_keyboard_layout.sh "$keymap"
+		-- bash archinstall_test/arch/setup_keyboard_layout.sh "$keymap"
 }
 
 main "$@"
