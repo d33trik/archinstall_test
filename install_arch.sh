@@ -5,8 +5,19 @@
 # o pipefail - script fails if command piped fails
 set -euo pipefail
 
+export GUM_CONFIRM_SELECTED_BACKGROUND=7
+export GUM_CONFIRM_SELECTED_FOREGROUND=0
+export GUM_CONFIRM_UNSELECTED_BACKGROUND=0
+export GUM_CONFIRM_UNSELECTED_FOREGROUND=7
+
 main () {
+	local keymap
+
 	show_installation_warning
+
+	get_keyboard_layout
+
+	setup_keyboard_layout
 }
 
 show_installation_warning() {
@@ -36,6 +47,21 @@ show_installation_warning() {
 	gum confirm \
 		--default="false" \
 		"$prompt"
+}
+
+get_keyboard_layout() {
+	keymap=$(
+		localectl list-keymaps |
+		gum filter \
+			--header="Keyboard Layout" \
+			--placeholder="Select your keyboard layout..."
+	)
+}
+
+setup_keyboard_layout() {
+	gum spin \
+		--title="Setting up the keyboard layout..." \
+		-- bash arch/setup_keyboard_layout.sh "$keymap"
 }
 
 main "$@"
