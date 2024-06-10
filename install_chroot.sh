@@ -22,16 +22,70 @@ main() {
 	local user_password=${9:?}
 	local user_username=${10:?}
 
-	echo "block_device: $block_device" >> arguments.txt
-	echo "boot_mode: $boot_mode" >> arguments.txt
-	echo "hostname: $hostname" >> arguments.txt
-	echo "keymap: $keymap" >> arguments.txt
-	echo "locale: $locale" >> arguments.txt
-	echo "root_password: $root_password" >> arguments.txt
-	echo "timezone: $timezone" >> arguments.txt
-	echo "user_full_name: $user_full_name" >> arguments.txt
-	echo "user_password: $user_password" >> arguments.txt
-	echo "user_username: $user_username" >> arguments.txt
+	install_gum
+	setup_root_password
+	setup_user_account
+	setup_timezone
+	setup_localization
+	setup_graphical_interface
+	setup_audio_interface
+	setup_network_interface
+	setup_bootloader
+}
+
+install_gum() {
+	clear
+	echo "Installing gum..."
+	pacman -Sy --noconfirm --needed gum &> /dev/null
+	clear
+}
+
+setup_root_password() {
+	gum spin \
+		--title="Setting up the root password..." \
+		-- bash archinstall_test/chroot/setup_root_password.sh "$root_password"
+}
+
+setup_user_account() {
+	gum spin \
+		--title="Setting up the user account..." \
+		-- bash archinstall_test/chroot/setup_user_account.sh "$user_full_name" "$user_username" "$user_password"
+}
+
+setup_timezone() {
+	gum spin \
+		--title="Setting up the timezone..." \
+		-- bash archinstall_test/chroot/setup_timezone.sh "$timezone"
+}
+
+setup_localization() {
+	gum spin \
+		--title="Setting up the localization..." \
+		-- bash archinstall_test/chroot/setup_localization.sh "$locale" "$keymap"
+}
+
+setup_graphical_interface() {
+	gum spin \
+		--title="Setting up the graphical interface..." \
+		-- bash archinstall_test/chroot/setup_graphical_interface.sh "$keymap"
+}
+
+setup_audio_interface() {
+	gum spin \
+		--title="Setting up the audio interface..." \
+		-- bash archinstall_test/chroot/setup_audio_interface.sh
+}
+
+setup_network_interface() {
+	gum spin \
+		--title="Setting up the network interface..." \
+		-- bash archinstall_test/chroot/setup_network_interface.sh "$hostname"
+}
+
+setup_bootloader() {
+	gum spin \
+		--title="Setting up the bootloader..." \
+		-- bash archinstall_test/chroot/setup_bootloader.sh "$boot_mode" "$block_device"
 }
 
 main "$@"
