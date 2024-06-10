@@ -86,6 +86,7 @@ main () {
 	uptate_pacman_mirrorlist
 	install_essential_packages
 	generate_fstab
+	copy_files_to_mnt
 }
 
 show_installation_warning() {
@@ -379,5 +380,10 @@ generate_fstab() {
 		-- bash archinstall_test/arch/generate_fstab.sh
 }
 
+copy_files_to_mnt() {
+	gum spin \
+		--title="Copying files to /mnt..." \
+		-- bash archinstall_test/arch/copy_files_to_mnt.sh
+}
 
 main "$@"

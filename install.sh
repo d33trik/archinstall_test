@@ -11,11 +11,8 @@ export GUM_SPIN_TITLE_FOREGROUND=15
 
 main() {
 	install_gum
-
 	install_git
-
 	clone_archinstall_repository
-
 	install_arch
 }
 
