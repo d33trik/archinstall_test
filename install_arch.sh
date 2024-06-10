@@ -87,6 +87,7 @@ main () {
 	install_essential_packages
 	generate_fstab
 	copy_files_to_mnt
+	install_chroot
 }
 
 show_installation_warning() {
@@ -384,6 +385,22 @@ copy_files_to_mnt() {
 	gum spin \
 		--title="Copying files to /mnt..." \
 		-- bash archinstall_test/arch/copy_files_to_mnt.sh
+}
+
+install_chroot() {
+	arch-chroot /mnt bash archinstall_test/install_chroot.sh \
+	"$block_device" \
+	"$boot_mode" \
+	"$dotfiles" \
+	"$hostname" \
+	"$keymap" \
+	"$locale" \
+	"$packages_to_install" \
+	"$root_password" \
+	"$timezone" \
+	"$user_full_name" \
+	"$user_password" \
+	"$user_username"
 }
 
 main "$@"
