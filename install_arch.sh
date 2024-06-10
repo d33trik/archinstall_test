@@ -236,9 +236,8 @@ get_block_device() {
             --nodeps \
             --paths \
             --output NAME,SIZE |
-        gum filter \
-            --header="Block Device" \
-            --placeholder="Select the block device where you want to install the system..."
+        gum choose \
+            --header="Select the block device where you want to install the system..." \
     )
 
      block_device=$(
@@ -268,9 +267,8 @@ get_wipe_method() {
 
 	wipe_method=$(
 		printf "%s\n" "${wipe_methods[@]}" |
-		gum filter \
-			--header="Wipe Method" \
-			--placeholder="Select your preferred wipe method..."
+		gum choose \
+			--header="Select your preferred wipe method..."
 	)
 }
 
