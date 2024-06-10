@@ -7,7 +7,6 @@ set -euo pipefail
 
 main () {
 	show_installation_warning
-
 }
 
 show_installation_warning() {
