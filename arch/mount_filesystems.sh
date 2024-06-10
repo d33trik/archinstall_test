@@ -1,4 +1,5 @@
 block_device=${1:?}
+boot_mode=${2:?}
 
 sleep 1
 mount "${block_device}3" /mnt

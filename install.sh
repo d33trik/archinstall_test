@@ -34,7 +34,6 @@ install_git() {
 		"
 }
 
-# TODO: Subistituir url do repositorio
 clone_archinstall_repository() {
 	gum spin \
 		--title="Cloning archinstall repository..." \
@@ -44,7 +43,6 @@ clone_archinstall_repository() {
 		"
 }
 
-# TODO: Substituir nome do diretorio
 install_arch() {
 	bash archinstall_test/install_arch.sh
 }

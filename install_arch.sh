@@ -5,10 +5,41 @@
 # o pipefail - script fails if command piped fails
 set -euo pipefail
 
+export GUM_CHOOSE_CURSOR_PREFIX="[ ] "
+export GUM_CHOOSE_CURSOR_FOREGROUND=10
+export GUM_CHOOSE_HEADER_FOREGROUND=15
+export GUM_CHOOSE_HEIGHT=50
+export GUM_CHOOSE_ITEM_FOREGROUND=9
+export GUM_CHOOSE_SELECTED_PREFIX="[X] "
+export GUM_CHOOSE_SELECTED_FOREGROUND=10
+export GUM_CHOOSE_UNSELECTED_PREFIX="[ ] "
+
 export GUM_CONFIRM_SELECTED_BACKGROUND=7
 export GUM_CONFIRM_SELECTED_FOREGROUND=0
 export GUM_CONFIRM_UNSELECTED_BACKGROUND=0
 export GUM_CONFIRM_UNSELECTED_FOREGROUND=7
+
+export GUM_FILTER_CURSOR_TEXT_FOREGROUND=10
+export GUM_FILTER_HEADER_FOREGROUND=15
+export GUM_FILTER_INDICATOR_FOREGROUND=10
+export GUM_FILTER_MATCH_FOREGROUND=10
+export GUM_FILTER_PROMPT_FOREGROUND=10
+export GUM_FILTER_SELECTED_PREFIX=" [X] "
+export GUM_FILTER_SELECTED_PREFIX_FOREGROUND=10
+export GUM_FILTER_UNSELECTED_PREFIX=" [ ] "
+export GUM_FILTER_UNSELECTED_PREFIX_FOREGROUND=9
+export GUM_FILTER_WIDTH=0
+
+export GUM_INPUT_CURSOR_FOREGROUND=7
+export GUM_INPUT_CURSOR_MODE=static
+export GUM_INPUT_PROMPT_FOREGROUND=10
+export GUM_INPUT_WIDTH=0
+export GUM_INPUT_HEADER_FOREGROUND=15
+
+export GUM_SPIN_SHOW_ERROR=true
+export GUM_SPIN_SPINNER=line
+export GUM_SPIN_SPINNER_FOREGROUND=10
+export GUM_SPIN_TITLE_FOREGROUND=15
 
 main () {
 	local keymap
@@ -332,7 +363,7 @@ format_partitions() {
 mount_filesystems() {
 	gum spin \
 		--title="Mounting filesystems..." \
-		-- bash archinstall_test/arch/mount_filesystems.sh "$block_device"
+		-- bash archinstall_test/arch/mount_filesystems.sh "$block_device" "$boot_mode"
 }
 
 uptate_pacman_mirrorlist() {
