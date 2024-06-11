@@ -31,6 +31,11 @@ main() {
 	setup_audio_interface
 	setup_network_interface
 	setup_bootloader
+	enable_sudo_execution_without_password
+	install_yay
+	install_packages
+	install_dotfiles
+	disable_sudo_execution_without_password
 }
 
 install_gum() {
@@ -86,6 +91,34 @@ setup_bootloader() {
 	gum spin \
 		--title="Setting up the bootloader..." \
 		-- bash archinstall_test/chroot/setup_bootloader.sh "$boot_mode" "$block_device"
+}
+
+enable_sudo_execution_without_password() {
+	gum spin \
+		--title="Enabling sudo execution without a password..." \
+		-- bash archinstall_test/chroot/enable_sudo_execution_without_password.sh
+}
+
+install_yay() {
+	gum spin \
+		--title="Installing yay..." \
+		-- sudo -u "$user_username" bash archinstall_test/chroot/yay.sh
+}
+
+install_packages() {
+	sudo -u "$user_username" bash archinstall_test/install_packages.sh
+}
+
+install_dotfiles() {
+	gum spin \
+		--title="Installing dotfiles..." \
+		-- sudo -u "$user_username" bash archinstall_test/chroot/dotfiles.sh
+}
+
+disable_sudo_execution_without_password() {
+	gum spin \
+		--title="Disabling sudo execution without a password..." \
+		-- bash archinstall_test/chroot/disable_sudo_execution_without_password.sh
 }
 
 main "$@"
