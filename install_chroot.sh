@@ -32,6 +32,7 @@ main() {
 	setup_network_interface
 	setup_bootloader
 	enable_sudo_execution_without_password
+	install_fish
 	install_yay
 	install_packages
 	install_dotfiles
@@ -97,6 +98,12 @@ enable_sudo_execution_without_password() {
 	gum spin \
 		--title="Enabling sudo execution without a password..." \
 		-- bash archinstall_test/chroot/enable_sudo_execution_without_password.sh
+}
+
+install_fish() {
+	gum spin \
+		--title="Installing fish..." \
+		-- bash archinstall_test/chroot/fish.sh "$user_username"
 }
 
 install_yay() {
