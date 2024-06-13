@@ -1,1 +1,1 @@
-sudo pacman -S --noconfirm --needed flameshot htop man man-pages neofetch openssh poppler unzip xclip xsel zip bat fzf
+sudo pacman -S --noconfirm --needed flameshot htop man man-pages neofetch openssh poppler unzip xclip xsel zip bat fzf udiskie
