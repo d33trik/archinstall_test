@@ -1,1 +1,1 @@
-sudo pacman -S --noconfirm --needed ttf-dejavu adobe-source-code-pro-fonts
+sudo pacman -S --noconfirm --needed ttf-dejavu ttf-sourcecodepro-nerd
